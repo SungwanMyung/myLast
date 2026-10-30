@@ -23,3 +23,36 @@ flowchart LR
     F --> C
     C --> A
 ```
+```mermaid
+flowchart LR
+    subgraph Sender["Sender (발신자)"]
+        A["메일 클라이언트<br/>Outlook / Thunderbird"]
+        B["SMTP Client"]
+    end
+
+    subgraph MailServer1["발신 메일 서버"]
+        C["SMTP Server<br/>Port 25 / 587"]
+        D["메일 큐 (Queue)"]
+    end
+
+    subgraph Internet["Internet"]
+        E["DNS MX 조회"]
+    end
+
+    subgraph MailServer2["수신 메일 서버"]
+        F["SMTP Server<br/>Port 25"]
+        G["메일 저장소"]
+    end
+
+    subgraph Receiver["Receiver (수신자)"]
+        H["메일 클라이언트"]
+    end
+
+    A --> B
+    B -->|"SMTP"| C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G -->|"IMAP / POP3"| H
+```
